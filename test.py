@@ -48,5 +48,3 @@ while True:
 # Release video resources
 cap.release()
 cv2.destroyAllWindows()
-
-#Testing git

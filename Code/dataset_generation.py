@@ -23,7 +23,7 @@ def main(num=1):
 
     # (1) Capture camera
     cap = cv2.VideoCapture(0)
-    cap.set(3, 1080)  # The width of the display box 1080
+    cap.set(3, 1920)  # The width of the display box 1920
     cap.set(4, 720)  # The height of the display box 720
 
     sTime = time.time()  # Set the start time for the first frame to start processing

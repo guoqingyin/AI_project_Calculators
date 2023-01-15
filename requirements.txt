@@ -1,0 +1,6 @@
+numpy
+pandas
+cv2
+cvzone
+torch
+d2l

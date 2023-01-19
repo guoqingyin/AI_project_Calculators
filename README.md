@@ -46,3 +46,6 @@ run the whole train notebook to train your model
 ### Test the performance of the model
 
 Run the test_number.py to test the model
+
+### Final_v1 The first demo of the calculator
+

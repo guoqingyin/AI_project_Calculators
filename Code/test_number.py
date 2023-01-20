@@ -57,8 +57,8 @@ def main():
                 5: '(', 6: ')', 7: '.', 8: 'del', 9: 'AC'}
 
     # Load number identification model
-    net_left = torch.load('net_left.pkl', map_location='cpu')
-    net_right = torch.load('net_right.pkl', map_location='cpu')
+    net_left = torch.load('net_left_new.pkl', map_location='cpu')
+    net_right = torch.load('net_right_new.pkl', map_location='cpu')
     model = [net_left, net_right]
 
     while True:

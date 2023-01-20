@@ -4,3 +4,4 @@ opencv-python
 cvzone
 torch
 d2l
+scikit-learn

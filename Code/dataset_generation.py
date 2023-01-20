@@ -87,7 +87,7 @@ def main(num=1):
                         cnt_r += 1
 
             # save datas to csv files
-            if cnt_l == 500 and cnt_r == 500:
+            elif cnt_l == 500 and cnt_r == 500:
                 cv2.putText(img, 'finished collecting', (300, 50),
                             cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
                 data_l = {"lmList": list_lmList_l,
@@ -105,6 +105,12 @@ def main(num=1):
                     f'{parent}/Data/left_{num}.csv', mode='a', header=False)
                 df_dataright.to_csv(
                     f'{parent}/Data/right_{num}.csv', mode='a', header=False)
+                cnt_l += 1
+                cnt_r += 1
+
+            else:
+                cv2.putText(img, 'finished collecting', (300, 50),
+                            cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
         # Display image, window name and image data
         cv2.imshow('image', img)

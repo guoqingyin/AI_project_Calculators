@@ -29,6 +29,12 @@ This project is realised based on the Library cvzone. https://github.com/cvzone/
 
 ## How to use
 
+You need to install all required libraries of python first.
+
+```python
+pip install -r requirements.txt
+```
+
 ### Generate trainning data
 
 run the dataset_generation.py to generate your own data
@@ -49,3 +55,4 @@ Run the test_number.py to test the model
 
 ### Final_v1 The first demo of the calculator
 
+Run the Final_v1.py to use the calculator

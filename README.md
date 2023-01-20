@@ -1,4 +1,5 @@
 # AI_project_Calculators
+
 This project is realised based on the Library cvzone. https://github.com/cvzone/cvzone
 
 ## Chinese number gestures
@@ -47,7 +48,7 @@ number denotes the number of the gesture
 
 ### Train the data
 
-run the whole train notebook to train your model
+run the whole train notebook to train your model and evaluate the model
 
 ### Test the performance of the model
 

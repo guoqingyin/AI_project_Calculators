@@ -67,6 +67,7 @@ def main():
     output_per_frame=[]
     Screen_Display=[]
     stack_operater=[]
+    flag=1
 
     while True:
 
@@ -85,25 +86,26 @@ def main():
         pTime = cTime  # Reset start time
 
         # Display fps information on the video.
-        cv2.putText(img, str(int(fps)), (1000, 50),
+        cv2.putText(img, str(int(fps)), (1200, 50),
                     cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
 
         if hands:
             # Hand 1
             hand1 = hands[0]
             output1 = handOutput(hand1, model, operator, img)
-            print(output1)
+            #print(output1)
             output_per_frame.append(output1)
             if len(hands) == 2:
                 # Hand 2
                 hand2 = hands[1]
                 output2 = handOutput(hand2, model, operator, img)
                 output_per_frame.append(output2)
+        # 1 no error |  0 error
 
         #put every output into output_per_frame and we judge the last 10 output
         #if they are the same means we want do a operation(input the number or operator)
         if len(output_per_frame)>10:
-            check=set(output_per_frame[-9:])
+            check=set(output_per_frame[-7:])
             if len(check)==1:
                 output_per_frame.clear()
                 temp=check.pop()
@@ -119,21 +121,39 @@ def main():
                             if operator_final=="AC":
                                 Screen_Display.clear()
                             elif operator_final=="DEL":
-                                Screen_Display.pop(-1)
+                                if len(Screen_Display)!=0:
+                                    Screen_Display.pop(-1)
                             else:# =
                                 if len(Screen_Display)>=2:
                                     expression="".join(Screen_Display)
                                     Calculator = InversPolishCalculator()
                                     Screen_Display.clear()
-                                    Screen_Display.append(Calculator.deal(expression))
+                                    try:
+                                        result=Calculator.deal(expression)
+                                        Screen_Display.append(str(result))
+                                    except:
+                                        flag=0
                 #short operator
                 else:
                     Screen_Display.append(temp)
 
         #print(output_per_frame)
         # Display image, window name and image data
-        #cv2.putText(img, 'AI Calculator', (500, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
-        cv2.putText(img, "".join(Screen_Display), (50, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+        #天蓝(250, 200, 130)
+        cv2.putText(img, 'AI Calculator', (500, 55), cv2.FONT_HERSHEY_PLAIN, 3, (0, 128, 255), 3)
+        cv2.rectangle(img, (490, 10), (820, 70), (0, 128, 255), 3)
+        cv2.rectangle(img, (50, 95), (550, 155), (135, 138, 128), -1)
+
+
+        if flag==0:
+            cv2.putText(img, "ERROR", (50, 150), cv2.FONT_HERSHEY_PLAIN, 4, (0, 0, 255),3)
+        if len(Screen_Display)!=0:
+            flag=1
+        cv2.putText(img, "".join(Screen_Display), (50, 150), cv2.FONT_HERSHEY_PLAIN, 4, (0, 0, 0), 3)
+        instuctions1='0:=  1:+  2:-  3:*    4:/'
+        instuctions2="5:(   6:)   7:.   8:DEL 9:AC"
+        cv2.putText(img,instuctions1,(800,650),cv2.FONT_HERSHEY_SIMPLEX,1, (0, 0, 255), 2)
+        cv2.putText(img, instuctions2,(800, 690), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
         cv2.imshow('image', img)
         # Each frame lingers for 20 milliseconds and then disappears, press ESC to exit
         if cv2.waitKey(10) & 0xFF == 27:

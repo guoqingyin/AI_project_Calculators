@@ -27,7 +27,11 @@ class InversPolishCalculator(object):#逆波兰计算器
             else:  # 是运算符进行运算,用次顶元素,和栈顶元素
                 ret = self.operation(ele, float(stack.pop()), float(stack.pop()))
                 stack.push(ret)
-        return '%.2f'% stack.pop()#返回结果
+        temp=stack.pop()
+        if abs(temp-int(temp))<=0.01:
+            return int(temp)
+        else:
+            return '%.2f'%temp
 
     def operation(self,sign, num2, num1):  # 定义算法
         if sign == '*':
@@ -95,8 +99,12 @@ class InversPolishCalculator(object):#逆波兰计算器
 
 
 if __name__ == '__main__':
-    exspression = input('请输入计算公式:')
+    # exspression = input('请输入计算公式:')
+    # Calculator = InversPolishCalculator()
+    # ret = Calculator.deal(exspression)
+    # print('计算结果:',ret)
+    # input()
+
     Calculator = InversPolishCalculator()
-    ret = Calculator.deal(exspression)
+    ret = Calculator.deal("1+2")
     print('计算结果:',ret)
-    input()

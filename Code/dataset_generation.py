@@ -101,8 +101,10 @@ def main(num=1):
 
                 path = os.getcwd()
                 parent = os.path.dirname(path)
-                df_dataleft.to_csv(f'{parent}/Data/left_{num}.csv', mode='a', header=False)
-                df_dataright.to_csv(f'{parent}/Data/right_{num}.csv', mode='a', header=False)
+                df_dataleft.to_csv(
+                    f'{parent}/Data/left_{num}.csv', mode='a', header=False)
+                df_dataright.to_csv(
+                    f'{parent}/Data/right_{num}.csv', mode='a', header=False)
 
         # Display image, window name and image data
         cv2.imshow('image', img)

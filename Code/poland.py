@@ -1,18 +1,29 @@
-# -----------------------------逆波兰计算器--------------------------------
+# -----------------------------InversPolishCalculator--------------------------------
+
+#Please ignore the Chinese comment below, it is very simple.
+
+
+#Create an instance and call the method deal
+#input a string like "1+2*(2.5+6)/9"
+#output the result of the "2.88" in str
+
+# Calculator = InversPolishCalculator()
+# ret = Calculator.deal("1+2")
+#ret: "3" in str
 class Stack():  # 定义一个栈
     def __init__(self,):
         self.stack = []
 
-    def push(self, data):  # 入栈
+    def push(self, data):
         self.stack.append(data)
 
-    def pop(self):  # 出栈
+    def pop(self):
         return self.stack.pop()
 
-    def is_empty(self):  # 是否栈空
+    def is_empty(self):
         return not len(self.stack)
 
-    def top(self):  # 栈顶元素
+    def top(self):
         if self.is_empty():
             return None
         return self.stack[-1]
@@ -115,4 +126,4 @@ if __name__ == '__main__':
 
     Calculator = InversPolishCalculator()
     ret = Calculator.deal("1+2")
-    print('计算结果:', ret)
+    print('result:', ret)

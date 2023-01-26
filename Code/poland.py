@@ -1,32 +1,43 @@
-# -----------------------------Reverse Polish Notion Caculator--------------------------------
-class Stack():  
+# -----------------------------InversPolishCalculator--------------------------------
+
+# Please ignore the Chinese comment below, it is very simple.
+
+
+# Create an instance and call the method deal
+# input a string like "1+2*(2.5+6)/9"
+# output the result of the "2.88" in str
+
+# Calculator = InversPolishCalculator()
+# ret = Calculator.deal("1+2")
+#ret: "3" in str
+class Stack():  # 定义一个栈
     def __init__(self,):
         self.stack = []
 
-    def push(self, data):  
+    def push(self, data):  # 入栈
         self.stack.append(data)
 
-    def pop(self):  
+    def pop(self):  # 出栈
         return self.stack.pop()
 
-    def is_empty(self):  
+    def is_empty(self):  # 是否栈空
         return not len(self.stack)
 
-    def top(self):  
+    def top(self):  # 栈顶元素
         if self.is_empty():
             return None
         return self.stack[-1]
 
 
-class InversPolishCalculator(object):  
+class InversPolishCalculator(object):
 
-    def deal(self, exspression): 
+    def deal(self, exspression):
         list_expression = self.get_list_expression(exspression)
-        stack = Stack()  
-        for ele in list_expression:  
-            if ele.replace('.', '').isdigit() or ele.replace('-', '').isdigit(): 
+        stack = Stack()
+        for ele in list_expression:
+            if ele.replace('.', '').isdigit() or ele.replace('-', '').isdigit():
                 stack.push(ele)
-            else:  
+            else:
                 ret = self.operation(ele, float(
                     stack.pop()), float(stack.pop()))
                 stack.push(ret)
@@ -36,7 +47,7 @@ class InversPolishCalculator(object):
         else:
             return '%.2f' % temp
 
-    def operation(self, sign, num2, num1):  
+    def operation(self, sign, num2, num1):
         if sign == '*':
             return num1 * num2
         if sign == '/':
@@ -47,7 +58,7 @@ class InversPolishCalculator(object):
         if sign == '-':
             return num1 - num2
 
-    def deal_str(self, expression):  
+    def deal_str(self, expression):
         status = 0
         res = ''
         expression = expression.strip().replace(' ', '')
@@ -86,7 +97,7 @@ class InversPolishCalculator(object):
             res.append(s2.pop())
         return res[::-1]
 
-    def deal_symbol(self, ele, s1, s2):  
+    def deal_symbol(self, ele, s1, s2):
         if s1.is_empty() or s1.top() == '(' or ele == '(':
             s1.push(ele)
         elif ele == ')':
@@ -99,7 +110,7 @@ class InversPolishCalculator(object):
             s2.push(s1.pop())
             self.deal_symbol(ele, s1, s2)
 
-    def get_priority(self, sign):  
+    def get_priority(self, sign):
         if sign == '*' or sign == '/':
             return 2
         elif sign == '+' or sign == '-':
@@ -115,4 +126,4 @@ if __name__ == '__main__':
 
     Calculator = InversPolishCalculator()
     ret = Calculator.deal("1+2")
-    print('计算结果:', ret)
+    print('result:', ret)

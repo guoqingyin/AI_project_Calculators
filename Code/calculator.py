@@ -140,12 +140,15 @@ def main():
 
         # print(output_per_frame)
         # Display image, window name and image data
-        #天蓝(250, 200, 130)
+
+        #blue(250, 200, 130)
+        #some GUI
         cv2.putText(img, 'AI Calculator', (500, 55),
                     cv2.FONT_HERSHEY_PLAIN, 3, (0, 128, 255), 3)
         cv2.rectangle(img, (490, 10), (820, 70), (0, 128, 255), 3)
         cv2.rectangle(img, (50, 95), (800, 155), (135, 138, 128), -1)
 
+        #If error or not
         if flag == 0:
             cv2.putText(img, "ERROR", (50, 150),
                         cv2.FONT_HERSHEY_PLAIN, 4, (0, 0, 255), 3)

@@ -1,32 +1,32 @@
-# -----------------------------逆波兰计算器--------------------------------
-class Stack():  # 定义一个栈
+# -----------------------------Reverse Polish Notion Caculator--------------------------------
+class Stack():  
     def __init__(self,):
         self.stack = []
 
-    def push(self, data):  # 入栈
+    def push(self, data):  
         self.stack.append(data)
 
-    def pop(self):  # 出栈
+    def pop(self):  
         return self.stack.pop()
 
-    def is_empty(self):  # 是否栈空
+    def is_empty(self):  
         return not len(self.stack)
 
-    def top(self):  # 栈顶元素
+    def top(self):  
         if self.is_empty():
             return None
         return self.stack[-1]
 
 
-class InversPolishCalculator(object):  # 逆波兰计算器
+class InversPolishCalculator(object):  
 
-    def deal(self, exspression):  # 主程序,传入中缀表达式,返回结果
+    def deal(self, exspression): 
         list_expression = self.get_list_expression(exspression)
-        stack = Stack()  # 实例化栈
-        for ele in list_expression:  # 处理逆波兰表达式
-            if ele.replace('.', '').isdigit() or ele.replace('-', '').isdigit():  # 是数字压入栈
+        stack = Stack()  
+        for ele in list_expression:  
+            if ele.replace('.', '').isdigit() or ele.replace('-', '').isdigit(): 
                 stack.push(ele)
-            else:  # 是运算符进行运算,用次顶元素,和栈顶元素
+            else:  
                 ret = self.operation(ele, float(
                     stack.pop()), float(stack.pop()))
                 stack.push(ret)
@@ -36,7 +36,7 @@ class InversPolishCalculator(object):  # 逆波兰计算器
         else:
             return '%.2f' % temp
 
-    def operation(self, sign, num2, num1):  # 定义算法
+    def operation(self, sign, num2, num1):  
         if sign == '*':
             return num1 * num2
         if sign == '/':
@@ -47,7 +47,7 @@ class InversPolishCalculator(object):  # 逆波兰计算器
         if sign == '-':
             return num1 - num2
 
-    def deal_str(self, expression):  # 处理中缀表达式字符串,转为列表形式方便计算
+    def deal_str(self, expression):  
         status = 0
         res = ''
         expression = expression.strip().replace(' ', '')
@@ -86,7 +86,7 @@ class InversPolishCalculator(object):  # 逆波兰计算器
             res.append(s2.pop())
         return res[::-1]
 
-    def deal_symbol(self, ele, s1, s2):  # 处理符号入栈出栈问题
+    def deal_symbol(self, ele, s1, s2):  
         if s1.is_empty() or s1.top() == '(' or ele == '(':
             s1.push(ele)
         elif ele == ')':
@@ -99,7 +99,7 @@ class InversPolishCalculator(object):  # 逆波兰计算器
             s2.push(s1.pop())
             self.deal_symbol(ele, s1, s2)
 
-    def get_priority(self, sign):  # priority of the operator
+    def get_priority(self, sign):  
         if sign == '*' or sign == '/':
             return 2
         elif sign == '+' or sign == '-':

@@ -54,6 +54,6 @@ run the whole train notebook to train your model and evaluate the model
 
 Run the test_number.py to test the model
 
-### Final_v1 The first demo of the calculator
+### Run the calculator
 
-Run the Final_v1.py to use the calculator
+Run the calculator.py to use the calculator

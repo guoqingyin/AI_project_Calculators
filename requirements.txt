@@ -2,6 +2,12 @@ numpy
 pandas
 opencv-python
 cvzone
+mediapipe
 torch
-d2l
+torchvision
 scikit-learn
+matplotlib
+seaborn
+requests
+# Install with: pip install d2l --no-deps  (pins conflict with modern Python)
+d2l

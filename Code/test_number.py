@@ -32,6 +32,8 @@ def handOutput(hand, model, operator, img):
         output = operator[num]
         cv2.putText(img, f'operator: {output}', (700, 50),
                     cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+    else:
+        output = None
     return output
 
 
@@ -42,8 +44,9 @@ def main():
     path = parent + '/Data'
     os.chdir(path)
 
-    # (1) Capture camera
-    cap = cv2.VideoCapture(0)
+    # (1) Capture camera (override with AI_CALC_VIDEO=/path/to/video.mp4 for headless/dev)
+    video_src = os.environ.get('AI_CALC_VIDEO', '0')
+    cap = cv2.VideoCapture(int(video_src) if video_src.isdigit() else video_src)
     cap.set(3, 1920)  # The width of the display box 1920
     cap.set(4, 720)  # The height of the display box 720
 
@@ -57,8 +60,8 @@ def main():
                 5: '(', 6: ')', 7: '.', 8: 'del', 9: 'AC'}
 
     # Load number identification model
-    net_left = torch.load('net_left_new.pkl', map_location='cpu')
-    net_right = torch.load('net_right_new.pkl', map_location='cpu')
+    net_left = torch.load('net_left_new.pkl', map_location='cpu', weights_only=False)
+    net_right = torch.load('net_right_new.pkl', map_location='cpu', weights_only=False)
     model = [net_left, net_right]
 
     while True:

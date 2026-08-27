@@ -30,11 +30,30 @@ This project is realised based on the Library cvzone. https://github.com/cvzone/
 
 ## How to use
 
-You need to install all required libraries of python first.
+Install Python dependencies (Cloud Agent / local):
 
-```python
-pip install -r requirements.txt
+```bash
+bash scripts/cloud-agent-install.sh
 ```
+
+Or manually:
+
+```bash
+pip install -r requirements.txt
+pip install d2l --no-deps
+```
+
+Run entrypoints from the `Code/` directory so model paths resolve to `Data/`:
+
+```bash
+cd Code
+python poland.py
+python calculator.py
+AI_CALC_VIDEO="../Demo video.mp4" python calculator.py
+python test_number.py
+```
+
+`AI_CALC_VIDEO` selects a video file instead of webcam index `0` (useful in Cloud Agent VMs without a camera).
 
 ### Generate trainning data
 

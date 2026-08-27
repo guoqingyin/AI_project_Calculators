@@ -34,6 +34,9 @@ def handOutput(hand, model, operator, img):
         output = operator[num]
         cv2.putText(img, f'operator: {output}', (800, 600),
                     cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+    else:
+        # Newer MediaPipe builds may report "Unknown" handedness
+        output = None
     return output
 
 
@@ -44,8 +47,9 @@ def main():
     path = parent + '/Data'
     os.chdir(path)
 
-    # (1) Capture camera
-    cap = cv2.VideoCapture(0)
+    # (1) Capture camera (override with AI_CALC_VIDEO=/path/to/video.mp4 for headless/dev)
+    video_src = os.environ.get('AI_CALC_VIDEO', '0')
+    cap = cv2.VideoCapture(int(video_src) if video_src.isdigit() else video_src)
     cap.set(3, 1920)  # The width of the display box 1920
     cap.set(4, 720)  # The height of the display box 720
 
@@ -61,8 +65,8 @@ def main():
                 5: '(', 6: ')', 7: '.', 8: 'DEL', 9: 'AC'}
 
     # Load number identification model
-    net_left = torch.load('net_left_new.pkl', map_location='cpu')
-    net_right = torch.load('net_right_new.pkl', map_location='cpu')
+    net_left = torch.load('net_left_new.pkl', map_location='cpu', weights_only=False)
+    net_right = torch.load('net_right_new.pkl', map_location='cpu', weights_only=False)
     model = [net_left, net_right]
 
     output_per_frame = []
@@ -74,6 +78,12 @@ def main():
 
         # Receive images
         success, img = cap.read()
+        if not success:
+            # Restart video file sources; exit if live camera fails
+            if not video_src.isdigit():
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                continue
+            break
 
         # Flip the image to ensure that the camera screen and human movement are mirror images
         img = cv2.flip(img, flipCode=1)  # 0 vertical flip, 1 horizontal flip
@@ -95,12 +105,14 @@ def main():
             hand1 = hands[0]
             output1 = handOutput(hand1, model, operator, img)
             # print(output1)
-            output_per_frame.append(output1)
+            if output1 is not None:
+                output_per_frame.append(output1)
             if len(hands) == 2:
                 # Hand 2
                 hand2 = hands[1]
                 output2 = handOutput(hand2, model, operator, img)
-                output_per_frame.append(output2)
+                if output2 is not None:
+                    output_per_frame.append(output2)
         # 1 no error |  0 error
 
         # put every output into output_per_frame and we judge the last 10 output
